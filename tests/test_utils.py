@@ -1,21 +1,45 @@
-import requests_cache
 import os
+from datetime import date, timedelta
+
 import pandas as pd
 import pytest
+import requests_cache
 from pandas_datareader import data as web
-from datetime import date
 
-from allokation import (
-    get_closing_price_from_yahoo,
-    map_columns_without_suffix,
-    transpose_prices,
-    calculate_multiplier,
-    calculate_amount,
-    calculate_total_for_each_ticker,
-    calculate_percentage_of_each_ticker
-)
+from allokation.utils import (calculate_amount, calculate_multiplier,
+                              calculate_percentage_of_each_ticker,
+                              calculate_total_for_each_ticker,
+                              get_closing_price_from_yahoo, get_target_date,
+                              map_columns_without_suffix, transpose_prices)
 
 STOCKS_DATA_FILEPATH = os.path.join(os.path.dirname(__file__), './data/stocks.csv')
+
+
+def test_get_target_date_when_today_is_a_weekday():
+    base_date = date(year=2020, month=9, day=4)
+    expected = base_date
+
+    result = get_target_date(base_date=base_date)
+
+    assert result == expected
+
+
+def test_get_target_date_when_today_is_saturday():
+    base_date = date(year=2020, month=9, day=5)
+    expected = base_date - timedelta(days=1)
+
+    result = get_target_date(base_date=base_date)
+
+    assert result == expected
+
+
+def test_get_target_date_when_today_is_sunday():
+    base_date = date(year=2020, month=9, day=6)
+    expected = base_date - timedelta(days=2)
+
+    result = get_target_date(base_date=base_date)
+
+    assert result == expected
 
 
 def test_get_closing_price_from_yahoo(mocker):
@@ -45,7 +69,7 @@ def test_get_closing_price_from_yahoo(mocker):
 
     expected = cached_df['Adj Close']
 
-    mocker.patch('allokation.functions.web.get_data_yahoo', lambda tickers, date: cached_df)
+    mocker.patch('allokation.utils.web.get_data_yahoo', lambda tickers, date: cached_df)
     result = get_closing_price_from_yahoo(tickers, target_date)
 
     assert result.equals(expected)

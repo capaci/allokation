@@ -1,5 +1,28 @@
+from datetime import date, timedelta
+
 import pandas as pd
 from pandas_datareader import data as web
+
+
+def get_target_date(base_date=date.today()):
+    weekdays = [
+        'monday',
+        'tuesday',
+        'wednesday',
+        'thursday',
+        'friday',
+        'saturday',
+        'sunday',
+    ]
+
+    target_date = base_date
+    weekday = weekdays[target_date.weekday()]
+    if weekday == 'saturday':
+        target_date = target_date - timedelta(days=1)
+    elif weekday == 'sunday':
+        target_date = target_date - timedelta(days=2)
+
+    return target_date
 
 
 def get_closing_price_from_yahoo(tickers, date):
