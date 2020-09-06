@@ -1,5 +1,3 @@
-import re
-import sys
 from os import path as op
 
 from setuptools import setup
@@ -26,7 +24,7 @@ tests_require = get_dependencies('requirements-tests.txt')
 setup(
     name='allokation',
     packages=['allokation'],
-    version='0.0.1',
+    version='0.0.2',
     python_requires='>=3.8',
     license='MIT License',
     description="""
@@ -39,7 +37,7 @@ setup(
     author='Rafael Capaci',
     author_email='rafaelcapacipereira@gmail.com',
     url='https://github.com/capaci/allokation',
-    download_url='https://github.com/capaci/allokation/archive/0.0.1.tar.gz',
+    download_url='https://github.com/capaci/allokation/archive/0.0.2.tar.gz',
     keywords=['finance', 'stocks', 'portfolio allocation'],
     classifiers=[
         'Development Status :: 3 - Alpha',
