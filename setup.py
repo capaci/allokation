@@ -24,7 +24,7 @@ tests_require = get_dependencies('requirements-tests.txt')
 setup(
     name='allokation',
     packages=['allokation'],
-    version='0.0.2',
+    version='0.0.3',
     python_requires='>=3.8',
     license='MIT License',
     description="""
@@ -37,7 +37,7 @@ setup(
     author='Rafael Capaci',
     author_email='rafaelcapacipereira@gmail.com',
     url='https://github.com/capaci/allokation',
-    download_url='https://github.com/capaci/allokation/archive/0.0.2.tar.gz',
+    download_url='https://github.com/capaci/allokation/archive/0.0.3.tar.gz',
     keywords=['finance', 'stocks', 'portfolio allocation'],
     classifiers=[
         'Development Status :: 3 - Alpha',
