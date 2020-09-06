@@ -5,7 +5,7 @@
 
 > A python package that gets stocks prices from [yahoo finance](https://finance.yahoo.com/) and calculates how much of each stocks you must buy to have almost equal distribution between the stocks you want in your portfolio
 
-## ** Disclaimer **
+## \*\*\*Disclaimer\*\*\*
 
 **NO FINANCIAL ADVISE** - This library **DO NOT** offer financial advises, it just calculates the amount of stocks you will need to buy based on stocks that **YOU WILL INFORM** and the market price of the day for these stocks, given by [yahoo finance](https://finance.yahoo.com/).
 
@@ -15,16 +15,10 @@
 
 ## Install
 
-- clone the repository
+- install via pip
 
 ```sh
-git clone git@github.com:capaci/allokation.git
-```
-
-- install dependencies
-
-```sh
-pip install -r requirements.txt
+pip install allokation
 ```
 
 ## Usage
@@ -75,7 +69,24 @@ pip install -r requirements.txt
 
 Check out the example available in [`example/example.py`](./example/example.py) to see it in action.
 
-## Run tests
+## Development Guide
+
+### Getting the project
+
+- clone this repository
+
+```sh
+git clone git@github.com:capaci/allokation.git
+```
+
+- install dependencies
+
+```sh
+pip install -r requirements.txt
+pip install -r requirements-tests.txt
+```
+
+### Run tests
 
 - Unit tests
 
