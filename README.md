@@ -23,7 +23,7 @@ pip install allokation
 
 ## Usage
 
-- It's quite simple to use this package, you just need to import the function `allocate_money`, pass a list of tickers you want and the available money you have to invest.
+- It's quite simple to use this package, you just need to import the function `allocate_money`, pass a list of tickers you want and the available money you have to invest. If you want, you can also pass a list of the percentages of each stocks you want in your portfolio. This list of percentages must have the same length of the tickers.
 
 - It will return a dict containing the allocations you must need and the total money you must need to have this portfolio (This total will be less or equal than the available money you informed to the `allocate_money` function). For each stock, it will be returned the `price` that was used to calculate the portfolio, the `amount` of stocks you will need to buy, the `total` money you need to buy this amount of this stock and the `percentage` that this stock represents in your portfolio. For example:
 

@@ -1,5 +1,6 @@
 from datetime import date
 
+import pytest
 import requests_cache
 from pandas_datareader import data as web
 
@@ -34,8 +35,23 @@ def test_allocate_money(mocker):
 
     assert result.get('allocations', None)
     assert result.get('total_value', None)
-    assert result['allocations'].get('B3SA3', None)
-    assert result['allocations'].get('BBDC4', None)
-    assert result['allocations'].get('MGLU3', None)
-    assert result['allocations'].get('PETR4', None)
-    assert result['allocations'].get('VVAR3', None)
+    assert result['allocations'].get('B3SA3.SA', None)
+    assert result['allocations'].get('BBDC4.SA', None)
+    assert result['allocations'].get('MGLU3.SA', None)
+    assert result['allocations'].get('PETR4.SA', None)
+    assert result['allocations'].get('VVAR3.SA', None)
+
+
+def test_allocate_money_with_percentage_with_different_length_than_stocks():
+    with pytest.raises(Exception):
+        tickers = [
+            'B3SA3.SA',
+            'BBDC4.SA',
+            'MGLU3.SA',
+            'PETR4.SA',
+            'VVAR3.SA',
+        ]
+
+        percentages = [10, 10, 10, 10, 10, 10, 10, 10, 10, 10]
+
+        allocate_money(1000, tickers, percentages=percentages)

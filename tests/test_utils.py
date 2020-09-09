@@ -2,17 +2,47 @@ import os
 from datetime import date, timedelta
 
 import pandas as pd
-import pytest
 import requests_cache
 from pandas_datareader import data as web
 
-from allokation.utils import (calculate_amount, calculate_multiplier,
+from allokation.utils import (calculate_amount,
                               calculate_percentage_of_each_ticker,
                               calculate_total_for_each_ticker,
-                              get_closing_price_from_yahoo, get_target_date,
-                              map_columns_without_suffix, transpose_prices)
+                              get_closing_price_from_yahoo,
+                              get_percentage_of_stocks, get_target_date,
+                              transpose_prices)
 
 STOCKS_DATA_FILEPATH = os.path.join(os.path.dirname(__file__), './data/stocks.csv')
+
+
+def test_get_percentage_of_stocks_without_percentage_should_return_equal_distribution():
+    tickers = [
+        'B3SA3.SA',
+        'BBDC4.SA',
+        'CSAN3.SA',
+        'CYRE3.SA',
+    ]
+
+    expected = 0.25
+
+    result = get_percentage_of_stocks(tickers=tickers)
+
+    assert result == expected
+
+
+def test_get_percentage_of_stocks_with_percentage_should_return_pandas_series():
+    tickers = [
+        'B3SA3.SA',
+        'BBDC4.SA',
+        'CSAN3.SA',
+        'CYRE3.SA',
+    ]
+    percentages = [40, 20, 20, 20]
+    expected = pd.Series([0.4, 0.2, 0.2, 0.2])
+
+    result = get_percentage_of_stocks(tickers=tickers, percentages=percentages)
+
+    assert result.equals(expected)
 
 
 def test_get_target_date_when_today_is_a_weekday():
@@ -88,42 +118,26 @@ def test_transpose_prices():
     assert result.equals(expected)
 
 
-def test_map_columns_without_suffix():
-    tickers = [
-        'MGLU3.SA',
-        'PETR4.SA',
-        'VVAR3.SA',
-    ]
-
-    result = map_columns_without_suffix(tickers)
-
-    expected = {
-        'MGLU3.SA': 'MGLU3',
-        'PETR4.SA': 'PETR4',
-        'VVAR3.SA': 'VVAR3',
-    }
-    assert result == expected
-
-
-def test_calculate_multiplier():
+def test_calculate_amount_with_equal_distribution():
     df = pd.read_csv(STOCKS_DATA_FILEPATH)
-    number_of_tickers = len(df.values)
     available_money = 1000
+    percentage_multiplier = 1/len(df)
 
-    expected = pytest.approx(3.57, 0.01)
+    expected = (available_money*percentage_multiplier/df['price']).round(0)
 
-    result = calculate_multiplier(df, number_of_tickers, available_money)
+    result = calculate_amount(df, available_money=available_money, percentage_multiplier=percentage_multiplier)
 
-    assert result == expected
+    assert result.equals(expected)
 
 
 def test_calculate_amount():
     df = pd.read_csv(STOCKS_DATA_FILEPATH)
-    multiplier = 1
+    available_money = 1000
+    percentage_multiplier = pd.Series([0.33, 0.33, 0.34])
 
-    expected = (df['price'].max()/df['price']).round(0)
+    expected = (available_money*percentage_multiplier/df['price']).round(0)
 
-    result = calculate_amount(df, multiplier=multiplier)
+    result = calculate_amount(df, available_money=available_money, percentage_multiplier=percentage_multiplier)
 
     assert result.equals(expected)
 

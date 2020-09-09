@@ -12,5 +12,7 @@ tickers = [
     'VVAR3.SA',
 ]
 
-result = allocate_money(available_money=AVAILABLE_MONEY, tickers=tickers)
+percentages = [60, 10, 10, 10, 10]
+
+result = allocate_money(available_money=AVAILABLE_MONEY, tickers=tickers, percentages=percentages)
 pp(result)
