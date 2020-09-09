@@ -1,7 +1,7 @@
 # Welcome to Allokation 👋
 
-![Version](https://img.shields.io/badge/version-0.0.3-blue.svg?cacheSeconds=2592000)
-![License](https://img.shields.io/badge/License-MIT-yellow.svg)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/capaci/allokation?style=for-the-badge)
+![GitHub](https://img.shields.io/github/license/capaci/allokation?style=for-the-badge)
 
 > A python package that gets stocks prices from [yahoo finance](https://finance.yahoo.com/) and calculates how much of each stocks you must buy to have almost equal distribution between the stocks you want in your portfolio
 
